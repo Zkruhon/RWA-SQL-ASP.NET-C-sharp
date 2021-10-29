@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MasterPage.Master.cs" Inherits="Api_Admin.MasterPage" %>
+
+<%@ Register Src="~/Navigation.ascx" TagPrefix="uc1" TagName="Navigation" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>RWA_PROJEKT</title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/custom.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="background-color: lightgray">
+    <form id="form1" runat="server">
+        <uc1:Navigation runat="server" ID="Navigation" />
+        <div class="container">
+            <asp:ContentPlaceHolder ID="content" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Api_Sati.Projekt>
+@{
+    ViewBag.Title = "Satnice";
+}
+
+<h2>Satnice</h2>
+
+<table class="table" style="table-layout: fixed">
+    <tr>
+        <td>
+            Projekti
+        </td>
+        <td>
+            Ukupno sati
+        </td>
+        <td>
+            Pokreni
+        </td>
+        <td>
+            Zaustavi
+        </td>
+        <td>
+            Radni sati
+        </td>
+        <td>
+            Prekovremeno
+        </td>
+    </tr>
+</table>
+
+<table class="table" style="table-layout: fixed">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                <span id="lblUkupno">0</span>
+            </td>
+            <td>
+                <input id="btnPokreni" class="btn btn-dark" type="button" value="Pokreni" onclick="StartTimer();" />
+            </td>
+            <td>
+                <input id="btnZaustavi" class="btn btn-dark" type="button" value="Zaustavi" onclick="StopTimer();" />
+            </td>
+            <td>
+                <span id="lblCount">0</span>
+            </td>
+            <td>
+                <span id="lblPrekovremeno">0</span>
+            </td>
+        </tr>
+    }
+</table>
+<script>
+    (function () {
+
+        $("#btn").click(function () {
+            switch ($(this).html().toLowerCase()) {
+
+                case "start":
+                    $("#t").timer({
+                        action: 'start',
+                        seconds: 0
+                    });
+                    $(this).html("Pause");
+                    $("input[name='s']").attr("disabled", "disabled");
+                    $("#t").addClass("badge-important");
+                    break;
+
+                case "resume":
+                    $("#t").timer('resume');
+                    $(this).html("Pause")
+                    $("#t").addClass("badge-important");
+                    break;
+
+                case "pause":
+                    $("#t").timer({ action: 'pause' });
+                    $(this).html("Resume")
+                    $("#t").removeClass("badge-important");
+                    break;
+            }
+        });
+    })();
+</script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="/path/to/cdn/jquery.min.js"></script>
+<script src="/path/to/cdn/timer.jquery.min.js"></script>
+
+<script type="text/javascript">
+    var interval = null;
+                    function StartTimer() {
+                        document.getElementById("lblUkupno").innerHTML = 0;
+                        if (interval == null) {
+                            var counter = 0;
+                            interval = setInterval(function () {
+                                counter += 1;
+                                
+                                document.getElementById("lblCount").innerHTML = counter;
+                                if (counter > 8) {
+                                    document.getElementById("lblPrekovremeno").innerHTML = counter - 8;
+                                    document.getElementById("lblCount").innerHTML = 8;
+                                }
+                            }, 1000);
+                        }
+                    }
+
+                    function StopTimer() {
+                        clearInterval(interval);
+                        interval = null;
+                        document.getElementById("lblUkupno").innerHTML = parseInt(document.getElementById("lblCount").innerHTML) + parseInt(document.getElementById("lblPrekovremeno").innerHTML);
+                        document.getElementById("lblPrekovremeno").innerHTML = 0;
+                    }
+</script>
